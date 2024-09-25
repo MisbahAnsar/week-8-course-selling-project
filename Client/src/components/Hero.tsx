@@ -67,16 +67,7 @@ const HeroSection: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-        <div className="h-56 w-full object-cover sm:h-72 md:h-96 lg:h-full">
-          <img
-            className="h-full w-full object-cover"
-            src="https://appxcontent.kaxa.in/paid_course3/2024-09-19-0.309826215873515.png"
-            alt="Students learning"
-          />
-          <div className="h-full w-full bg-gradient-to-br from-white via-transparent to-transparent absolute z-10"></div>
-        </div>
-      </div>
+      
     </section>
   );
 };
