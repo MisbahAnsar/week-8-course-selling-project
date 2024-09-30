@@ -7,7 +7,7 @@ const Header: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    // Check if the user is signed in by looking for a userId in localStorage
+    // Check if the user is signed in by looking for a token in localStorage
     const token = localStorage.getItem('token');
     if (token) {
       setIsLoggedIn(true); // User is signed in
@@ -23,9 +23,17 @@ const Header: React.FC = () => {
   };
 
   const handleSignOut = () => {
-    localStorage.removeItem('userId'); // Clear the userId when signing out
+    localStorage.removeItem('token'); // Clear the token when signing out
     setIsLoggedIn(false); // Update state to show Sign in/Sign up buttons again
     navigate('/'); // Navigate to the main page after sign-out
+  };
+
+  const handleMyCourses = () => {
+    if (isLoggedIn) {
+      navigate('/mycourses'); // Navigate to the MyCourses page
+    } else {
+      alert('Please sign in to view your purchased courses.');
+    }
   };
 
   return (
@@ -36,10 +44,12 @@ const Header: React.FC = () => {
             <BookOpen className="h-8 w-8 text-blue-600" />
             <span className="ml-2 text-xl font-bold text-gray-900">EduPlatform</span>
           </div>
-          <nav className="hidden md:flex space-x-10">
-            <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">Courses</a>
-            <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">About</a>
-            <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">Contact</a>
+          <nav className="md:flex space-x-10">
+            <a
+              onClick={handleMyCourses}
+              className="text-base font-medium text-gray-500 hover:text-gray-900">MyCourses</a>
+            <a className="text-base font-medium text-gray-500 hover:text-gray-900">About</a>
+            <a className="text-base font-medium text-gray-500 hover:text-gray-900">Contact</a>
           </nav>
           <div className="flex items-center space-x-4">
             {/* Conditionally render Sign in/Sign up or Sign out */}

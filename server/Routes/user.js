@@ -17,7 +17,7 @@ userRouter.post("/signin", async (req, res)=>{
             });
         }
 
-        const isMatch = await bcrypt.compare(password, user.password);
+        const isMatch = bcrypt.compare(password, user.password);
         if(!isMatch){
             return res.status(400).json({
                 message: "email or password is not valid, please try again"

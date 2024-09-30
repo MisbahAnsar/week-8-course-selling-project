@@ -18,6 +18,10 @@ const Signup: React.FC = () => {
     try {
       const userData = { email, password, firstName, lastName };
       const response = await signupUser(userData);
+
+      const user = response.user;
+      localStorage.setItem('user', user.id)
+      
       setMessage(response.message); // Set success message
       // Optionally redirect or handle after successful signup
     } catch (err: any) {

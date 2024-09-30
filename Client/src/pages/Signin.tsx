@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { LockIcon, MailIcon } from 'lucide-react';
-import { SigninUser } from '../utils';
+import { SigninUser } from '../utils';  // Assuming this handles API calls
 import { useNavigate } from 'react-router-dom';
 
-
 interface SigninProps {
-    onSignIn: (userId: string) => void; // Add this prop for authentication
+    onSignIn: (token: string) => void; // Callback for authentication
 }
-
 
 const Signin: React.FC<SigninProps> = ({ onSignIn }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
+
+  const navigate = useNavigate(); // Moved this higher in scope
 
   const handleSignin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,22 +23,26 @@ const Signin: React.FC<SigninProps> = ({ onSignIn }) => {
     try {
       const userData = { email, password };
       const response = await SigninUser(userData);
-      setMessage(response.message);
-      localStorage.setItem('userId', response.userId);
-      console.log(response);
-      onSignIn(response.userId);
-      navigate('/')
+      
+      // Assuming the response contains a token
+      const token = response.token;
+      
+      // Store token in localStorage instead of userId
+      localStorage.setItem('token', token);  
+      // Call the onSignIn prop to update state
+      onSignIn(token);
+
+      // Navigate only after token is stored
+      navigate('/'); 
+      
     } catch (err: any) {
-      setError(err.message); // Set error message
+      setError(err.message || 'Signin failed'); // Set error message
     }
   };
 
-  const navigate = useNavigate();
-
   const handleSignUp = () => {
-    navigate('/signup'); // Update this path to your signup route
+    navigate('/signup'); // Redirect to signup page
   };
-  
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">

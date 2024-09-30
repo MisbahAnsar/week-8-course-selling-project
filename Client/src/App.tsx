@@ -1,10 +1,12 @@
 import React, { Suspense, useState } from 'react';
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import LandingPage from './pages/Landing';
 import Signup from './pages/Signup';
 import Signin from './pages/Signin';
-import PurchaseCourse from './components/PurchaseCourse';
-import PurchaseCoursePage from './pages/PurchaseCoursePage'; // Import the new PurchaseCoursePage
+import AllCourses from './pages/AllCourses';
+import CourseDetails from './pages/DetailCoursePage';
+import MyCourses from './pages/MyCourses';
+
 
 const App: React.FC = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -23,8 +25,9 @@ const App: React.FC = () => {
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/signin" element={<Signin onSignIn={handleSignIn} />} />
-                <Route path="/purchase" element={isAuthenticated ? <PurchaseCourse userId={userId!} /> : <Navigate to="/signin" />} />
-                <Route path="/purchase-course" element={<PurchaseCoursePage />} /> {/* Add the route for PurchaseCoursePage */}
+                <Route path="/purchase" element={<AllCourses />} />
+                <Route path='courses/:courseId' element={<CourseDetails />}/>
+                <Route path='/mycourses' element={<MyCourses />}/>
             </Routes>
         </Suspense>
     );

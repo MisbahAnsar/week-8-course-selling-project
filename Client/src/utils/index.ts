@@ -41,12 +41,6 @@ export const purchaseCourse = async (courseId: string, userId: string) => {
     }
 };
 
-// export const fetchCourseDetails = async (courseId: string) => {
-//     const response = await axios.get(`${COURSE_URL}${courseId}`);
-//     return response.data.course; // Return course data
-// };
-
-
 export const fetchCourses = async () => {
     try {
       const response = await axios.get(`${COURSE_URL}allcourses`);
@@ -56,23 +50,28 @@ export const fetchCourses = async () => {
     }
 };
 
-// export const adminSignup = async (adminData) => {
-//     const response = await axios.post(`${API_URL}/admin/signup`, adminData);
-//     return response.data;
-// };
-
-// export const adminSignin = async (adminData) => {
-//     const response = await axios.post(`${API_URL}/admin/signin`, adminData);
-//     return response.data;
-// // };
-
-// export const createCourse = async (courseData) => {
-//     const response = await axios.post(`${API_URL}/admin/course`, courseData);
-//     return response.data;
-// };
-
-// export const updateCourse = async (courseId, courseData) => {
-//     const response = await axios.put(`${API_URL}/admin/course/${courseId}`, courseData);
-//     return response.data;
-// };
-
+export const fetchCourseById = async (courseId) => {
+    // Assuming you make an API call to fetch a single course by its ID
+    const response = await fetch(`${COURSE_URL}courses/${courseId}`);
+    return await response.json();
+  };
+  
+export const PurchasedCourses = async () => {
+    try {
+        const token = localStorage.getItem('token'); // Get the token from localStorage
+        if (!token) {
+          throw new Error('No token found. User not authenticated.');
+        }
+    
+        const response = await axios.get(`${API_URL}purchases`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+    
+        return response.data.courses; // Return the purchased courses
+      } catch (error) {
+        console.error("Error fetching purchased courses:", error);
+        throw error; // Let the calling component handle the error
+      }
+}

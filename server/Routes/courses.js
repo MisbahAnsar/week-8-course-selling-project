@@ -1,6 +1,5 @@
 const { Router } = require('express');
 const { userModel, courseModel, purchaseModel } = require('../db');
-const bcrypt = require('bcrypt');  // Not needed if you want to skip password validation
 const adminAuth = require('../auth/adminAuth');
 
 const coursesRouter = Router();
